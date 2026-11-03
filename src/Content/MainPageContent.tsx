@@ -15,8 +15,8 @@ export const mainPageContent = [
   },
   {
     Icon: CheckCircle2,
-    Title: "Tanndai Hari ini",
+    Title: "Tandai Hari ini",
     Description: "Catat kapan kamu minum Tablet Tambah Darah.",
-    Link : "/User/Profile"
+    Link : "/User/Kalendar"
   },
 ];

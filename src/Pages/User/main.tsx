@@ -2,9 +2,12 @@ import { HeartPulse, ChevronRight } from "lucide-react";
 import ScrollAreaUI from "@/components/FixedComponents/ScrollAreaUI";
 import { useNavigate } from "react-router";
 import { mainPageContent } from "@/Content/MainPageContent";
+import { useTtdLogs } from "@/hooks/getTtdLog";
 
 export const Main = () => {
   const navigate = useNavigate();
+  const username = localStorage.getItem("username");
+  const { data: logs, isLoading, isError } = useTtdLogs();
 
   return (
     <main className="flex-1 px-4 sm:px-6 pt-8 max-sm:mt-0 space-y-6 overflow-y-auto">
@@ -19,8 +22,8 @@ export const Main = () => {
 
         <div className="relative z-10 flex items-center justify-between">
           <div className="space-y-1.5 max-w-[65%]">
-            <h2 className="text-lg font-bold tracking-tight">
-              Hai, Siti Aminah 👋
+            <h2 className="text-xl font-bold tracking-tight">
+              Hai, {username}
             </h2>
             <p className="text-xs text-rose-100 font-medium">
               Jadwal TTD minggu ini:{" "}
@@ -86,7 +89,15 @@ export const Main = () => {
           </h1>
           {/* Hapus h-44 jika membuat area scroll terpotong di dalamnya, atau biarkan flex-1 */}
           <div className="w-full">
-            <ScrollAreaUI />
+            {isLoading ? (
+              <div className="flex items-center justify-center p-8 text-sm text-slate-500">
+                Memuat riwayat minum TTD...
+              </div>
+            ) : isError || logs.length <= 0 ? (
+              <p>Tidak ada konten apapun!!</p>
+            ) : (
+              <ScrollAreaUI datas={logs}/>
+            )}
           </div>
         </section>
       </div>
@@ -96,3 +107,4 @@ export const Main = () => {
     </main>
   );
 };
+

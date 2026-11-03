@@ -31,7 +31,7 @@ export default function Edukasi() {
           </div>
           <div>
             <h3 className="font-bold text-slate-800 text-sm">
-              Apa itu Anemia?
+              Cara penanganan Anemia
             </h3>
             <p className="text-xs text-slate-500">
               Pelajari apa itu anemia, gejala, dan cara mencegahnya.
@@ -47,7 +47,7 @@ export default function Edukasi() {
           </div>
           <div>
             <h3 className="font-bold text-slate-800 text-sm">
-              Apa itu Anemia?
+              Tips makanan untuk gejala Anemia
             </h3>
             <p className="text-xs text-slate-500">
               Pelajari apa itu anemia, gejala, dan cara mencegahnya.

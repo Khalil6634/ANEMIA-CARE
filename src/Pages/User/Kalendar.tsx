@@ -1,8 +1,43 @@
 import { CalendarUI } from "@/components/FixedComponents/Calendar";
-import { Button } from "@/components/ui/button";
-import { Check, CheckCircle2Icon } from "lucide-react";
+import { useTtdLogs } from "@/hooks/getTtdLog";
+import { Check } from "lucide-react";
 
 export default function KalenderTTD() {
+  const { data: logs } = useTtdLogs();
+  const Now = new Date();
+  const Year = Now.getFullYear();
+  const Month = Now.getMonth();
+
+  function getWednesdaysInMonth(year: number, month: number) {
+    const wednesdays: Date[] = [];
+    const date = new Date(year, month, 1);
+
+    while (date.getDay() !== 3) {
+      date.setDate(date.getDate() + 1);
+    }
+
+    while (date.getMonth() === month) {
+      wednesdays.push(new Date(date));
+      date.setDate(date.getDate() + 7);
+    }
+
+    return wednesdays;
+  }
+
+
+  const takenDates =
+    logs
+      ?.filter((log) => log.status === "SUDAH")
+      .map((log) => {
+        // log.date dari database (misal: "2026-11-04")
+        const d = new Date(log.date);
+
+        // 🛡️ Ambil murni komponen tahun, bulan, dan tanggal UTC-nya tanpa terpengaruh jam lokal
+        return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+      }) || [];
+
+  const wenesday = getWednesdaysInMonth(Year, Month);
+
   return (
     <div className="min-h-screen bg-slate-100/70 sm:py-8 sm:px-4 flex justify-center items-start sm:items-center">
       {/* Lebar container disesuaikan: max-w-md untuk mobile, max-w-4xl untuk desktop */}
@@ -26,11 +61,11 @@ export default function KalenderTTD() {
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-4 h-4 rounded-full bg-rose-500" />
-                <span>Jadwal minum</span>
+                <span>Belum minum</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-4 h-4 rounded-full bg-slate-300" />
-                <span>Belum dicatat</span>
+                <span>Terlewat</span>
               </div>
             </div>
           </div>
@@ -44,24 +79,20 @@ export default function KalenderTTD() {
               <div className="space-y-3 text-xs sm:text-sm text-slate-700">
                 <div className="flex justify-between">
                   <span>Jadwal TTD</span>
-                  <span className="font-bold text-slate-900">: 8 kali</span>
+                  <span className="font-bold text-slate-900">
+                    : {wenesday.length} kali
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Sudah dicatat</span>
-                  <span className="font-bold text-slate-900">: 5 kali</span>
+                  <span className="font-bold text-slate-900">: {takenDates.length} kali</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Belum dicatat</span>
-                  <span className="font-bold text-slate-900">: 3 kali</span>
+                  <span className="font-bold text-slate-900">: {wenesday.length - takenDates.length } kali</span>
                 </div>
               </div>
             </div>
-          <Button className={"bg-green-500 w-full h-10 font-semibold"}>
-            <CheckCircle2Icon strokeWidth={3} /> Checklis Hari ini
-          </Button>
-          <Button variant="secondary" className={"w-full h-10 font-semibold"}>
-            <CheckCircle2Icon strokeWidth={3} /> Checklis Hari ini
-          </Button>
           </div>
         </div>
       </main>

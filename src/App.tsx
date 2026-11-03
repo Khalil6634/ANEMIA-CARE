@@ -8,6 +8,9 @@ import Materi from "./Pages/User/Materi";
 import PageLayout from "./layout/_PageLayout";
 import UserLayout from "./layout/_UserLayout";
 import { Navigate } from "react-router";
+import { AdminBeranda } from "./Pages/Admin/main";
+import { SignupPage } from "./Pages/User/Signup";
+import { LoginPage } from "./Pages/User/Login";
 
 const App = () => {
   return (
@@ -19,10 +22,14 @@ const App = () => {
         <Route path="/User/Profile" element={<Profile />} />
       </Route>
       <Route element={<PageLayout />}>
-        <Route path="/User/Edukasi/Materi" element={<Materi />} />
+        <Route path="/User/Edukasi/Materi/:id" element={<Materi />} />
       </Route>
-      <Route element={<MainLayout />}></Route>
+      <Route element={<MainLayout />}>
+        <Route path="/Admin/" element={<AdminBeranda />} />
+      </Route>
       <Route path="*" element={<Navigate to={"/Login/"} replace/>}/>
+      <Route path="/Signup/" element={<SignupPage/>}/>
+      <Route path="/Login/" element={<LoginPage/>}/>
     </Routes>
   );
 };

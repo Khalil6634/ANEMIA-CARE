@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 
 export default function Profile() {
+  const username = localStorage.getItem("username");
+  const nis = localStorage.getItem("nis");
   return (
     <div className="min-h-dvh bg-slate-100/70 flex flex-col justify-between font-sans relative">
       <div className="h-12"></div>
@@ -29,7 +31,7 @@ export default function Profile() {
               />
             </div>
             <div className="text-center">
-              <h3 className="text-lg font-bold text-slate-900">Siti Aminah</h3>
+              <h3 className="text-lg font-bold text-slate-900">{username}</h3>
               <p className="text-xs text-slate-500">Siswa / Pelajar</p>
             </div>
           </div>
@@ -38,11 +40,11 @@ export default function Profile() {
           <div className="space-y-4 pt-2">
             <div className="flex items-center justify-between py-3 border-b border-slate-100 text-sm">
               <span className="text-slate-500 font-medium">Nama</span>
-              <span className="font-semibold text-slate-800">Siti Aminah</span>
+              <span className="font-semibold text-slate-800">{username}</span>
             </div>
             <div className="flex items-center justify-between py-3 border-b border-slate-100 text-sm">
               <span className="text-slate-500 font-medium">NIS</span>
-              <span className="font-semibold text-slate-800">123456</span>
+              <span className="font-semibold text-slate-800">{nis}</span>
             </div>
             <div className="flex items-center justify-between py-3 border-b border-slate-100 text-sm">
               <span className="text-slate-500 font-medium">Sekolah</span>
