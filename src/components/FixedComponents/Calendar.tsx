@@ -104,7 +104,7 @@ export function CalendarUI() {
           components={{
             Day: ({ day, ...htmlProps }: any) => {
               const currentDate: Date = day?.date || day;
-              if (!currentDate || !(currentDate instanceof Date)) return null;
+              if (!currentDate || !(currentDate instanceof Date)) return <div {...htmlProps} />;
 
               const year = currentDate.getFullYear();
               const month = currentDate.getMonth();

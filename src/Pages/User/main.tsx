@@ -93,7 +93,7 @@ export const Main = () => {
               <div className="flex items-center justify-center p-8 text-sm text-slate-500">
                 Memuat riwayat minum TTD...
               </div>
-            ) : isError || logs.length <= 0 ? (
+            ) : isError || !logs || logs.length <= 0 ? (
               <p>Tidak ada konten apapun!!</p>
             ) : (
               <ScrollAreaUI datas={logs}/>

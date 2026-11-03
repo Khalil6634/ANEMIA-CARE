@@ -10,7 +10,7 @@ interface dataScroll {
   date: string;
   status: string;
   label: string;
-  desc: string;
+  desc: string | null;
 }
 
 interface props {

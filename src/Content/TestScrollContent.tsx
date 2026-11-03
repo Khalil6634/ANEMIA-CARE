@@ -31,10 +31,3 @@ export const testScrollContent = [
     },
 ];
 
-  const sudahMinumDates = [
-    new Date(2026, 9, 6),
-    new Date(2026, 9, 8),
-    new Date(2026, 9, 13),
-    new Date(2026, 9, 15),
-    new Date(2026, 9, 20),
-  ];
