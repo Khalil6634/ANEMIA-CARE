@@ -1,6 +1,6 @@
 import { HeartPulse, ChevronRight } from "lucide-react";
 import ScrollAreaUI from "@/components/FixedComponents/ScrollAreaUI";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { mainPageContent } from "@/Content/MainPageContent";
 import { useTtdLogs } from "@/hooks/getTtdLog";
 

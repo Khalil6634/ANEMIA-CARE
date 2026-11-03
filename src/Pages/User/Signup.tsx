@@ -12,7 +12,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useSignupMutation } from "@/lib/Signup";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export function SignupPage() {
   const [formData, setFormData] = useState({
@@ -274,12 +274,12 @@ export function SignupPage() {
           <div className="text-center pt-2">
             <p className="text-xs sm:text-sm text-slate-500">
               Sudah punya akun?{" "}
-              <a
-                href="/login"
+              <Link
+                to={"/Login"}
                 className="font-bold text-rose-600 hover:underline"
               >
                 Masuk di sini
-              </a>
+              </Link>
             </p>
           </div>
         </div>
