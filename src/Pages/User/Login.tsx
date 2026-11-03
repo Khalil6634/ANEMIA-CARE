@@ -9,7 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useLoginMutation } from "@/lib/Autht"; // Sesuaikan path import hook Anda
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export function LoginPage() {
   const [formData, setFormData] = useState({
@@ -191,12 +191,12 @@ export function LoginPage() {
           <div className="text-center pt-2">
             <p className="text-xs sm:text-sm text-slate-500">
               Belum punya akun?{" "}
-              <a
-                href="/signup"
+              <Link
+                to={"/Signup/"}
                 className="font-bold text-rose-600 hover:underline"
               >
                 Daftar di sini
-              </a>
+              </Link>
             </p>
           </div>
         </div>
