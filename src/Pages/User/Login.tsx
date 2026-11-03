@@ -71,7 +71,7 @@ export function LoginPage() {
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-12 bg-white overflow-x-hidden">
       {/* Kolom Kiri: Sisi Informasi & Branding (Full Tinggi & Proporsional di Desktop) */}
-      <div className="hidden lg:flex lg:col-span-5 bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 p-10 xl:p-16 text-white flex-col justify-between relative overflow-hidden">
+      <div className="hidden lg:flex lg:col-span-5 bg-linear-to-br from-rose-600 via-pink-600 to-rose-700 p-10 xl:p-16 text-white flex-col justify-between relative overflow-hidden">
         {/* Efek Lingkaran Abstrak */}
         <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-64 h-64 rounded-full bg-black/10 blur-2xl pointer-events-none" />
