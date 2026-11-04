@@ -114,7 +114,7 @@ export function LoginPage() {
               Masuk Akun 👋
             </h2>
             <p className="text-xs sm:text-sm text-slate-500">
-              Masukkan NIS dan password Anda untuk melanjutkan ke dashboard.
+              Masukkan Email atau NIS dan password Anda untuk melanjutkan ke dashboard.
             </p>
           </div>
 
@@ -137,7 +137,7 @@ export function LoginPage() {
             {/* NIS */}
             <div className="space-y-1.5">
               <label className="text-xs sm:text-sm font-semibold text-slate-700">
-                NIS (Nomor Induk Siswa)
+                NIS (Nomor Induk Siswa) / Email
               </label>
               <div className="relative">
                 <input
