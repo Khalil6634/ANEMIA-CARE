@@ -1,7 +1,9 @@
 import axios from "axios";
 
+
+
 const axiosInstance = axios.create({
-  baseURL: "https://backendanemia-nisr.vercel.app/API/",
+  baseURL: "http://localhost:8000/API/",
   headers: {
     "Content-Type": "application/json",
   },

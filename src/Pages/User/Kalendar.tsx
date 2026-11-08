@@ -1,33 +1,29 @@
 import { CalendarUI } from "@/components/FixedComponents/Calendar";
-import { useTtdLogs } from "@/hooks/getTtdLog";
+import { useTtdCalendarLogs } from "@/hooks/getDataKalendar";
 import { Check } from "lucide-react";
+import getWednesdaysInMonth from "@/libs/getWenesday";
+import type { TtdRecord, sumary } from "@/hooks/getTtdLog";
 
 export default function KalenderTTD() {
-  const { data: logs } = useTtdLogs();
+  const {
+    data: logs = {
+      data: [],
+      summary: { jadwalTtd: 0, sudahDicatat: 0, belumDicatat: 0 },
+    } as { data: TtdRecord[]; summary: sumary },
+  } = useTtdCalendarLogs();
+
   const Now = new Date();
   const Year = Now.getFullYear();
   const Month = Now.getMonth();
 
-  function getWednesdaysInMonth(year: number, month: number) {
-    const wednesdays: Date[] = [];
-    const date = new Date(year, month, 1);
+  const logsScrapping = logs.data || [];
+  const summary = logs.summary || { jadwalTtd: 0, sudahDicatat: 0, belumDicatat : 0 };
 
-    while (date.getDay() !== 3) {
-      date.setDate(date.getDate() + 1);
-    }
-
-    while (date.getMonth() === month) {
-      wednesdays.push(new Date(date));
-      date.setDate(date.getDate() + 7);
-    }
-
-    return wednesdays;
-  }
-
+  const wenesday = getWednesdaysInMonth(Year, Month);
 
   const takenDates =
-    logs
-      ?.filter((log) => log.status === "SUDAH")
+    logsScrapping
+      .filter((log) => log.status === "SUDAH")
       .map((log) => {
         // log.date dari database (misal: "2026-11-04")
         const d = new Date(log.date);
@@ -35,8 +31,6 @@ export default function KalenderTTD() {
         // 🛡️ Ambil murni komponen tahun, bulan, dan tanggal UTC-nya tanpa terpengaruh jam lokal
         return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
       }) || [];
-
-  const wenesday = getWednesdaysInMonth(Year, Month);
 
   return (
     <div className="min-h-screen bg-slate-100/70 sm:py-8 sm:px-4 flex justify-center items-start sm:items-center">
@@ -48,7 +42,10 @@ export default function KalenderTTD() {
           <div className="lg:col-span-7 space-y-4">
             {/* Box Pembungkus Kalender */}
             <div className="bg-rose-50/40 rounded-2xl p-3 border border-rose-100/75">
-              <CalendarUI />
+              <CalendarUI
+                dataRecord={logsScrapping}
+                dateSudahMinum={takenDates}
+              />
             </div>
 
             {/* Keterangan / Legend Status */}
@@ -85,11 +82,15 @@ export default function KalenderTTD() {
                 </div>
                 <div className="flex justify-between">
                   <span>Sudah dicatat</span>
-                  <span className="font-bold text-slate-900">: {takenDates.length} kali</span>
+                  <span className="font-bold text-slate-900">
+                    : {summary.sudahDicatat} kali
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Belum dicatat</span>
-                  <span className="font-bold text-slate-900">: {wenesday.length - takenDates.length } kali</span>
+                  <span className="font-bold text-slate-900">
+                    : {wenesday.length - summary.sudahDicatat} kali
+                  </span>
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ import { Navigate } from "react-router";
 import { AdminBeranda } from "./Pages/Admin/main";
 import { SignupPage } from "./Pages/User/Signup";
 import { LoginPage } from "./Pages/User/Login";
+import { ProtectedRoute } from "./Pages/ProtectedRoute";
 
 const App = () => {
   return (
@@ -24,12 +25,14 @@ const App = () => {
       <Route element={<PageLayout />}>
         <Route path="/User/Edukasi/Materi/:id" element={<Materi />} />
       </Route>
-      <Route element={<MainLayout />}>
-        <Route path="/Admin/" element={<AdminBeranda />} />
+      <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+        <Route element={<MainLayout />}>
+          <Route path="/Admin/" element={<AdminBeranda />} />
+        </Route>
       </Route>
-      <Route path="*" element={<Navigate to={"/Login/"} replace/>}/>
-      <Route path="/Signup/" element={<SignupPage/>}/>
-      <Route path="/Login/" element={<LoginPage/>}/>
+      <Route path="*" element={<Navigate to={"/Login/"} replace />} />
+      <Route path="/Signup/" element={<SignupPage />} />
+      <Route path="/Login/" element={<LoginPage />} />
     </Routes>
   );
 };

@@ -5,47 +5,40 @@ import React from "react";
 import { AlertCircle, CheckCircle2, XCircle } from "lucide-react";
 import { id } from "date-fns/locale";
 import { format } from "date-fns";
-
-interface dataScroll {
-  date: string;
-  status: string;
-  label: string;
-  desc: string;
-}
+import type { TtdRecord } from "@/hooks/getTtdLog";
 
 interface props {
-  datas: dataScroll[]
+  datas: TtdRecord[];
 }
 
 // createdAt
-// : 
+// :
 // "2026-11-03T21:23:57.919Z"
 // date
-// : 
+// :
 // "2026-11-04T00:00:00.000Z"
 // desc
-// : 
+// :
 // "sudah minum obat anemia"
 // id
-// : 
+// :
 // "d5e4e492-f8e7-4827-8edf-833a3f081519"
 // label
-// : 
+// :
 // "Sudah Diminum"
 // status
-// : 
+// :
 // "SUDAH"
 // updatedAt
-// : 
+// :
 // "2026-11-03T21:23:57.919Z"
 // userId
-// : 
+// :
 // "30958c92-1213-40ee-95fd-6a02cd5823bf"
 
-const ScrollAreaUI = (data:props) => {
-
+const ScrollAreaUI = (data: props) => {
   return (
-    <ScrollArea className="w-full h-70 rounded-2xl border border-rose-100 bg-white p-2 shadow-sm">
+    <ScrollArea className="w-full h-65 rounded-2xl border border-rose-100 bg-white p-2 shadow-sm">
       <div className="p-2 space-y-1">
         {data.datas.map((value, i) => {
           let badgeStyle = "bg-slate-100 text-slate-600 border-slate-200";
@@ -86,7 +79,9 @@ const ScrollAreaUI = (data:props) => {
                   </div>
 
                   <div className="text-xs font-medium text-rose-600">
-                    {format(value.date.toString(), "EEEE, d MMMM yyyy", { locale: id })}
+                    {format(value.date.toString(), "EEEE, d MMMM yyyy", {
+                      locale: id,
+                    })}
                   </div>
 
                   <p className="text-xs text-slate-500 leading-relaxed">

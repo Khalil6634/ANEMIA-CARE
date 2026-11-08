@@ -1,13 +1,23 @@
 import { HeartPulse, ChevronRight } from "lucide-react";
 import ScrollAreaUI from "@/components/FixedComponents/ScrollAreaUI";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { mainPageContent } from "@/Content/MainPageContent";
 import { useTtdLogs } from "@/hooks/getTtdLog";
+import { useEffect } from "react";
+import { SlidersHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useSearchParams } from "react-router";
 
 export const Main = () => {
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
   const { data: logs, isLoading, isError } = useTtdLogs();
+  const [] = useSearchParams();
+
+  useEffect(() => {
+    return () => {};
+  }, []);
+  console.log(logs);
 
   return (
     <main className="flex-1 px-4 sm:px-6 pt-8 max-sm:mt-0 space-y-6 overflow-y-auto">
@@ -49,10 +59,12 @@ export const Main = () => {
       {/* Grid Layout: 1 kolom di HP (turun ke bawah), 2 kolom di layar besar (lg) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Kolom Kiri: Edukasi & Navigasi */}
-        <section className="space-y-4 w-full">
-          <h1 className="text-xl font-semibold text-slate-800">
-            Edukasi & Navigasi
-          </h1>
+        <section className="space-y-3 w-full">
+          <div className="w-full flex justify-between items-center">
+            <h1 className="text-xl font-semibold text-slate-800">
+              Edukasi & Navigasi
+            </h1>
+          </div>
 
           {/* Card 1: Kenali Anemia */}
 
@@ -84,19 +96,26 @@ export const Main = () => {
 
         {/* Kolom Kanan: Statistik & Ringkasan */}
         <section className="space-y-4 w-full z-10">
-          <h1 className="text-xl font-semibold text-slate-800">
-            Statistik & Ringkasan
-          </h1>
+          <div className="w-full flex justify-between items-center">
+            <h1 className="text-xl font-semibold text-slate-800">
+              Statistik & Ringkasan
+            </h1>
+            <Button variant="ghost" className={"text-rose-500"}>
+              <SlidersHorizontal size={15} />
+            </Button>
+          </div>
           {/* Hapus h-44 jika membuat area scroll terpotong di dalamnya, atau biarkan flex-1 */}
           <div className="w-full">
             {isLoading ? (
-              <div className="flex items-center justify-center p-8 text-sm text-slate-500">
+              <div className="flex items-center bg-white h-70 justify-center p-8 text-sm text-slate-500">
                 Memuat riwayat minum TTD...
               </div>
-            ) : isError || logs.length <= 0 ? (
-              <p>Tidak ada konten apapun!!</p>
+            ) : isError || logs.data.length <= 0 ? (
+              <div className="flex items-center justify-center p-8 text-sm text-slate-500">
+                <p>Kamu belum ada catatan apapun :(</p>
+              </div>
             ) : (
-              <ScrollAreaUI datas={logs}/>
+              <ScrollAreaUI datas={logs.data} />
             )}
           </div>
         </section>
@@ -107,4 +126,3 @@ export const Main = () => {
     </main>
   );
 };
-

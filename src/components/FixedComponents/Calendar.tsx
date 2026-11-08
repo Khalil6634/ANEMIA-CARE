@@ -5,26 +5,22 @@ import { id } from "date-fns/locale";
 import { Button } from "../ui/button";
 import { format } from "date-fns";
 import { useUpdateTtd } from "@/hooks/updateTTDLog";
-import { useTtdLogs } from "@/hooks/getTtdLog";
+import type { TtdRecord } from "@/hooks/getTtdLog";
+import getWednesdaysInMonth from "@/libs/getWenesday";
 
-export function CalendarUI() {
+interface calendarProps {
+  dataRecord:TtdRecord[], 
+  dateSudahMinum:Date[]
+}
+
+export function CalendarUI(props:calendarProps) {
   const [date, setDate] = useState<Date | undefined>(new Date(2026, 9, 22));
   const today = new Date();
   const day = format(today, "EEEE", { locale: id });
   const { mutate: markAsTaken, isPending } = useUpdateTtd();
 
-  const { data: logs } = useTtdLogs();
+  const logsFilter = props.dataRecord || [];
 
-  const takenDates =
-    logs
-      ?.filter((log) => log.status === "SUDAH")
-      .map((log) => {
-        // log.date dari database (misal: "2026-11-04")
-        const d = new Date(log.date);
-
-        // 🛡️ Ambil murni komponen tahun, bulan, dan tanggal UTC-nya tanpa terpengaruh jam lokal
-        return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-      }) || [];
 
   // 2. Fungsi saat tanggal di kalender diklik
   const handleDateSelect = (date: Date | undefined) => {
@@ -37,7 +33,7 @@ export function CalendarUI() {
     const day = String(date.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}`; // Pastikan hasilnya "2026-11-04"
 
-    const isAlreadyChecked = logs?.some(
+    const isAlreadyChecked = logsFilter?.some(
       (log) =>
         log.date.split("T")[0] === formattedDate && log.status === "SUDAH",
     );
@@ -61,24 +57,7 @@ export function CalendarUI() {
   const Year = Now.getFullYear();
   const Month = Now.getMonth();
 
-  const sudahMinumDates = takenDates;
-
-  function getWednesdaysInMonth(year: number, month: number) {
-    const wednesdays: Date[] = [];
-    const date = new Date(year, month, 1);
-
-    while (date.getDay() !== 3) {
-      date.setDate(date.getDate() + 1);
-    }
-
-    while (date.getMonth() === month) {
-      wednesdays.push(new Date(date));
-      date.setDate(date.getDate() + 7);
-    }
-
-    return wednesdays;
-  }
-
+  const sudahMinumDates = props.dateSudahMinum;
   const jadwalMinumDates = getWednesdaysInMonth(Year, Month);
 
   return (
@@ -157,7 +136,7 @@ export function CalendarUI() {
         />
         <Button
           onClick={() => handleDateSelect(new Date())}
-          className={"bg-green-500 w-full h-10 font-semibold"}
+          className={"bg-green-500 mt-5 w-full h-10 font-semibold"}
           disabled={day !== "Rabu"}
         >
           {isPending ? (

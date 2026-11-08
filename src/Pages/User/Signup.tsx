@@ -10,12 +10,14 @@ import {
   AlertCircle,
   HeartPulse,
   ShieldCheck,
+  Mail,
 } from "lucide-react";
-import { useSignupMutation } from "@/lib/Signup";
+import { useSignupMutation, type SignupPayload } from "@/lib/Signup";
 import { Link, useNavigate } from "react-router";
+import { AlertAll } from "@/components/FixedComponents/Alert";
 
 export function SignupPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupPayload>({
     name: "",
     nis: "",
     school: "",
@@ -23,6 +25,7 @@ export function SignupPage() {
     dob: "",
     phone: "",
     password: "",
+    email: "",
   });
 
   const [alert, setAlert] = useState<{
@@ -32,13 +35,18 @@ export function SignupPage() {
   const navigate = useNavigate();
 
   // Panggil React Query Mutation hook
-  const { mutate: signupUser, isPending, isSuccess } = useSignupMutation();
+  const {
+    mutate: signupUser,
+    isPending,
+    isSuccess,
+    isError,
+  } = useSignupMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setAlert(null);
 
@@ -57,6 +65,7 @@ export function SignupPage() {
           dob: "",
           phone: "",
           password: "",
+          email: "",
         });
       },
       onError: (error: any) => {
@@ -75,6 +84,15 @@ export function SignupPage() {
 
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-12 bg-white overflow-x-hidden">
+      <div className="absolute z-15 p-4">
+        {isSuccess ? (
+          <AlertAll activityStatus={true} />
+        ) : isError ? (
+          <AlertAll activityStatus={false} />
+        ) : (
+          ""
+        )}
+      </div>
       {/* Kolom Kiri: Branding */}
       <div className="hidden lg:flex lg:col-span-5 bg-linear-to-br from-rose-600 via-pink-600 to-rose-700 p-10 xl:p-16 text-white flex-col justify-between relative overflow-hidden">
         <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-white/10 blur-2xl pointer-events-none" />
@@ -136,7 +154,7 @@ export function SignupPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handlerSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-xs sm:text-sm font-semibold text-slate-700">
                 Nama Lengkap
@@ -201,6 +219,24 @@ export function SignupPage() {
                   className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 pl-10 focus:outline-none focus:border-rose-500"
                 />
                 <School className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs sm:text-sm font-semibold text-slate-700">
+                Email
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Contoh@gmail.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 pl-10 focus:outline-none focus:border-rose-500"
+                />
+                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
               </div>
             </div>
 
@@ -287,3 +323,5 @@ export function SignupPage() {
     </div>
   );
 }
+
+

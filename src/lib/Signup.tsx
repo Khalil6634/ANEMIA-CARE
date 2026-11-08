@@ -1,7 +1,7 @@
 import axiosInstance from "@/libs/AxiosIntaces";
 
-export interface User {
-  id: string;
+export interface UserType {
+  id?: string;
   name: string;
   nis: string;
   school: string;
@@ -9,12 +9,13 @@ export interface User {
   dob: Date | string; // Bisa berupa objek Date atau string ISO dari database/API
   phone?: string | null;
   password?: string;  // Opsional, biasanya disembunyikan saat dikirim ke frontend
+  email:string
 }
 
 import { useMutation } from '@tanstack/react-query';
 
 // Tipe data payload signup
-interface SignupPayload {
+export interface SignupPayload {
   name: string;
   nis: string;
   school: string;
@@ -22,6 +23,7 @@ interface SignupPayload {
   dob: string;
   phone?: string;
   password: string;
+  email:string;
 }
 
 export function useSignupMutation() {

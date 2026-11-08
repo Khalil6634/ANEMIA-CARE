@@ -1,5 +1,4 @@
 import { BookOpen } from "lucide-react";
-import { Link } from "react-router";
 
 export default function Edukasi() {
   return (

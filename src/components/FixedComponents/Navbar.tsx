@@ -1,8 +1,10 @@
 import { HeartPulse } from "lucide-react";
 import { User } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 
 const Navbar = () => {
   const username = localStorage.getItem("username");
+
 
   return (
     <header className="bg-white border-b border-rose-100 sticky top-0 z-50 shadow-xs">
@@ -20,7 +22,7 @@ const Navbar = () => {
         {/* User Profile Pill (Header) */}
         <div className="flex items-center gap-2 bg-rose-50/60 px-3 py-1.5 rounded-full border border-rose-100">
           <div className="w-7 h-7 rounded-full bg-rose-200 flex items-center justify-center text-rose-700 font-bold text-xs">
-            <User/>
+            <User />
           </div>
           <span className="text-xs sm:text-sm font-semibold text-slate-800">
             {username}
